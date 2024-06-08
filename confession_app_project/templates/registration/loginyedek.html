@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{%block content%}
+
+{%if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+
+{%if user.is_authenticated%}
+<h2>Welcome {{user.username}}</h2>
+{%else%}
+
+
+<div class="container" style="width: 50%; margin-top: 50px;">
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field|add_class:"form-control" }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+</div>
+
+{%endif%}
+
+{%endblock%}
+
+///////////////////////////////////
+
+<form action="", method="POST">
+    {% csrf_token %}
+    <div class="container" style="width: 50%;">
+      <div class="mb-3">
+      <label for="nickname" class="form-label">Nickname</label>
+      <input type="text" class="form-control" id="nickname" name="nickname">
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Message</label>
+      <input type="text" class="form-control" id="message" name="message">
+    </div>
+    <button type="submit" class="btn btn-primary">Send Confession</button>
+  </div>
+  </form>

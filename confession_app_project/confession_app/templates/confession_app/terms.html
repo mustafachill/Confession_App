@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load form_tags %}
+{% block content %}
+<style>
+    ul {
+  list-style-type: disc;
+}
+</style>
+
+<div class="container" style="width: 50%;">
+    <ol>
+        <!---->
+        <li>
+            <p>
+                Privacy and Anonymity:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Users must share their confessions without disclosing others' personal information.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Shared confessions will remain anonymous as per the privacy policy.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Inappropriate Content:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Obscene, offensive, threatening, or illegal content must not be shared.
+                    </p>
+                </li>
+                    <li>
+                    <p>
+                        Such content may be removed by moderators, and user accounts may be suspended.
+                    </p>
+                    </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Accuracy and Truthfulness:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Shared confessions should be as accurate and truthful as possible.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Deliberately misleading or false information sharing is prohibited.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Respect and Tolerance:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        All users must use respectful and tolerant language towards others.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Discriminatory, hate speech, or harassment-related confessions are unacceptable.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Age Restriction:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Users must be at least 18 years old to register and use the app.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Minors may not register without the consent of a parent or legal guardian.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Disclaimer of Responsibility:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Users are solely responsible for the content they share.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        The app management does not accept legal responsibility for user posts.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Data Usage:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        User data will be collected and used as per the privacy policy.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Data will not be shared with third parties and will only be used to improve the app
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Advertising and Promotion:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        The confession page must not be used for advertising or commercial promotion.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Users wishing to advertise must contact the management.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Reporting and Complaints:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Users can report inappropriate or rule-violating content.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Moderators will review reported content and take necessary actions.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <!---->
+        <li>
+            <p>
+                Right to Change:
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        The app management reserves the right to change the terms and policies.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Users will be notified of these changes and will be deemed to accept them by continuing to use the app.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <a href="{% url 'confession_app:signup' %}" target="_self" style="font-size: 20px;">Go to sign-up</a>
+</div>
+
+
+<br><br>
+{% endblock %}

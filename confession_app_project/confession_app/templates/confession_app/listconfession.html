@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h1>List Confession Page</h1>
+
 <br>
-<ul>
-    {%for confession in confessions%}
-    <li><h3>{{confession.nickname}}: {{confession.message}}</h3></li>
-    {%endfor%}
-</ul>
+    <div class="container" style="width: 50%;">
+        {%for confession in confessions%}
+            <div class="card" style="padding: 5px;">
+                <div class="card-header" style="background-color: #3cb2b6;">
+                    <h4>{{confession.username}}</h4>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{confession.message}}</p>
+                </div>
+
+                {%if confession.username == user%}
+                <a href="{% url 'confession_app:deleteconfession' id=confession.id %}" class="btn btn-danger">Delete</a>
+                {%endif%}
+            </div>
+            <br>
+        {%endfor%}
+    </div>
 {% endblock %}
