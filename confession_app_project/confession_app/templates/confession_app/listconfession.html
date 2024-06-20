@@ -1,22 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-
-<br>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <br>
     <div class="container" style="width: 50%;">
-        {%for confession in confessions%}
+        {% for confession in confessions %}
             <div class="card" style="padding: 5px;">
-                <div class="card-header" style="background-color: #3cb2b6;">
-                    <h4>{{confession.username}}</h4>
+                <div class="card-header" style="background-color: #84231B;">
+                    <h4 style="color: azure;">{{ confession.username }}</h4>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">{{confession.message}}</p>
+                    <p class="card-text">{{ confession.message }}</p>
+                    <p>Likes: {{ confession.likes.count }} | Dislikes: {{ confession.dislikes.count }}</p>
                 </div>
-
-                {%if confession.username == user%}
-                <a href="{% url 'confession_app:deleteconfession' id=confession.id %}" class="btn btn-danger">Delete</a>
-                {%endif%}
+                <div class="card-footer">
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'confession_app:like_confession' confession.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn transparent-button">
+                                <img src="{% static 'images/like_icon.png' %}" alt="Like" style="width: 24px; height: 24px;">
+                            </button>
+                        </form>
+                        <form action="{% url 'confession_app:dislike_confession' confession.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn transparent-button">
+                                <img src="{% static 'images/dislike_icon.png' %}" alt="Dislike" style="width: 24px; height: 24px;">
+                            </button>
+                        </form>
+                    {% endif %}
+                    {% if confession.username == user %}
+                        <form action="{% url 'confession_app:deleteconfession' confession.id %}" method="post" style="display: inline; float: right;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
             <br>
-        {%endfor%}
+        {% endfor %}
     </div>
 {% endblock %}

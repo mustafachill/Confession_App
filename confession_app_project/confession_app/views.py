@@ -1,21 +1,46 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from . import models
 from django.views.decorators.csrf import csrf_exempt #if there is something wrong for CSRF
 from django.urls import reverse, reverse_lazy
-from confession_app.forms import AddConfessionForm, AddConfessionModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from .forms import LoginForm
 from django.contrib.auth.views import LogoutView
 from .forms import CustomUserCreationForm
+from .models import Confession
+
 
 # Create your views here.
-#@csrf_exempt
 def listconfession(request):
-    all_confessions = models.Confession.objects.all()
-    confessions_dict = {"confessions":all_confessions}
-    return render(request,'confession_app/listconfession.html', context=confessions_dict)
+    all_confessions = Confession.objects.all()
+    confessions_dict = {"confessions": all_confessions}
+    return render(request, 'confession_app/listconfession.html', context=confessions_dict)
+
+def like_confession(request, confession_id):
+    if request.method == 'POST':
+        confession = get_object_or_404(Confession, id=confession_id)
+        if request.user in confession.dislikes.all():
+            confession.dislikes.remove(request.user)
+        if request.user not in confession.likes.all():
+            confession.likes.add(request.user)
+        else:
+            confession.likes.remove(request.user)
+    return redirect('confession_app:listconfession')
+
+@login_required
+def dislike_confession(request, confession_id):
+    if request.method == 'POST':
+        confession = get_object_or_404(Confession, id=confession_id)
+        if request.user in confession.likes.all():
+            confession.likes.remove(request.user)
+        if request.user not in confession.dislikes.all():
+            confession.dislikes.add(request.user)
+        else:
+            confession.dislikes.remove(request.user)
+    return redirect('confession_app:listconfession')
+
+
 #@csrf_exempt
 @login_required(login_url="/login")
 def addconfession(request):
@@ -27,36 +52,6 @@ def addconfession(request):
         return render(request,'confession_app/addconfession.html')
     else:
         return render(request,'confession_app/addconfession.html')
-
-def addconfessionbyform(request):
-    if request.POST:
-        form = AddConfessionForm(request.POST)
-        if form.is_valid():
-            nickname = form.cleaned_data["nickname_input"]
-            message = form.cleaned_data["message_input"]
-            models.Confession.objects.create(nickname=nickname, message=message)
-            return redirect(reverse('confession_app:listconfession'))
-        else:
-            print("error in form")
-            return redirect(reverse('confession_app:listconfession'))
-    else:
-        form = AddConfessionForm()
-        return render(request,'confession_app/addconfessionbyform.html',context={"form":form})
-    
-def addconfessionbymodelform(request):
-    if request.POST:
-        form = AddConfessionModelForm(request.POST)
-        if form.is_valid():
-            nickname = form.cleaned_data["nickname"]
-            message = form.cleaned_data["message"]
-            models.Confession.objects.create(nickname=nickname, message=message)
-            return redirect(reverse('confession_app:listconfession'))
-        else:
-            print("error in form")
-            return render(request,'confession_app/addconfessionbymodelform.html',context={"form":form})
-    else:
-        form = AddConfessionModelForm()
-        return render(request,'confession_app/addconfessionbymodelform.html',context={"form":form})
     
 @login_required
 def deleteconfession(request,id):
@@ -87,6 +82,3 @@ def log_out(request):
 
 def terms(request):
     return render(request,'confession_app/terms.html')
-
-
-

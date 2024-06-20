@@ -4,16 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from confession_app.models import Confession
 
-class AddConfessionForm(forms.Form):
-    nickname_input = forms.CharField(label="Nickname", max_length=50)
-    message_input = forms.CharField(label="Message", max_length=250,widget=forms.Textarea(attrs={"class":"confessionmessage"}))
-
-
-class AddConfessionModelForm(ModelForm):
-    class Meta:
-        model = Confession
-        fields = ["username","message"]
-
 class LoginForm(forms.Form):
     username = forms.CharField(label='Nickname', max_length=100)
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
